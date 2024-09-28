@@ -5,11 +5,16 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "./api/axios";
+import "./styles.css"; // CSS dosyanın yolu
+import { useNavigate } from "react-router-dom"; // useNavigate hook'unu ekledik
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; // Kullanıcı adı: 3-24 karakter arası, harf ile başlamalı
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/; // Şifre: 8-24 karakter, en az 1 büyük harf, küçük harf, rakam, özel karakter
+const REGISTER_URL = "/register";
 
 const Register = () => {
+  const navigate = useNavigate(); // useNavigate hook'unu ekledik
   const userRef = useRef();
   const errRef = useRef();
 
@@ -61,8 +66,30 @@ const Register = () => {
       setErrMsg("Invalid Entry");
       return;
     }
-    console.log(user, pwd);
-    setSuccess(true);
+    try {
+      const response = await axios.post(
+        REGISTER_URL,
+        JSON.stringify({ user, pwd }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      console.log(response.accessToken);
+      console.log(JSON.stringify(response));
+      setSuccess(true);
+      //clear input fields
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 409) {
+        setErrMsg("Username Taken");
+      } else {
+        setErrMsg("registration failed");
+      }
+      errRef.current.focus();
+    }
   };
 
   return (
@@ -71,7 +98,8 @@ const Register = () => {
         <section>
           <h1>Success!</h1>
           <p>
-            <a href="#">Sign In</a>
+            {/* Başarılı olduğunda Sign In sayfasına yönlendir */}
+            <button onClick={() => navigate("/signin")}>Sign In</button>
           </p>
         </section>
       ) : (
@@ -203,8 +231,10 @@ const Register = () => {
             Already Registered?
             <br />
             <span className="line">
-              {/*put router link here*/}
-              <a href="#">Sign In</a>
+              {/* Sign Up linkine tıklanırsa Register sayfasına yönlendir */}
+              <a href="#" onClick={() => navigate("/signin")}>
+                Sign In
+              </a>
             </span>
           </p>
         </section>

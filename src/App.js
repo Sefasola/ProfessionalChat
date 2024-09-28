@@ -1,12 +1,21 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Register from "./Register";
+import SignIn from "./SignIn";
+import ScenarioCreation from "./ScenarioCreation";
+import ScenarioWriting from "./ScenarioWriting"; // Senaryo yazma sayfası eklendi
 
 function App() {
   return (
-    <main className="App">
-      <Register />
-    </main>
+    <Router>
+      <Routes>
+        <Route path="/" element={<SignIn />} /> {/* Ana sayfa olarak SignIn */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/scenario-creation" element={<ScenarioCreation />} />{" "}
+        <Route path="/scenario-writing" element={<ScenarioWriting />} />{" "}
+        {/* Yönlendirme buraya */}
+      </Routes>
+    </Router>
   );
 }
 
