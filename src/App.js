@@ -3,6 +3,7 @@ import Register from "./Register";
 import SignIn from "./SignIn";
 import ScenarioCreation from "./ScenarioCreation";
 import ScenarioWriting from "./ScenarioWriting"; // Senaryo yazma sayfası eklendi
+import ScenarioList from "./ScenarioList";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/scenario-creation" element={<ScenarioCreation />} />{" "}
         <Route path="/scenario-writing" element={<ScenarioWriting />} />{" "}
+        <Route path="/scenario-list" element={<ScenarioList />} />{" "}
         {/* Yönlendirme buraya */}
       </Routes>
     </Router>

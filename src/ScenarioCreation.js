@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Yönlendirme için useNavigate eklendi
+import { useNavigate, useLocation } from "react-router-dom"; // useLocation eklendi
 import "./ScenarioCreation.css"; // CSS dosyasını ekledik
 
 const ScenarioCreation = () => {
@@ -7,6 +7,7 @@ const ScenarioCreation = () => {
   const [response, setResponse] = useState("");
   const navigate = useNavigate(); // Yönlendirme için navigate kullanımı
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü açma/kapama durumu
+  const location = useLocation(); // Mevcut sayfa konumunu almak için
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,8 +30,27 @@ const ScenarioCreation = () => {
     navigate("/scenario-writing");
   };
 
+  const handleScenaricreateByAI = () => {
+    // Yazılan senaryolar sayfasına yönlendirme
+    if (location.pathname === "/scenario-creation") {
+      setIsMenuOpen(false); // Menü kapansın
+    } else {
+      navigate("/scenario-creation"); // Farklı sayfadaysa yönlendirme yap
+      setIsMenuOpen(false); // Menü kapansın
+    }
+    //navigate("/scenario-creation");
+  };
+
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); // Menü açma/kapama işlevi
+    setIsMenuOpen(!isMenuOpen);
+    const dropdown = document.querySelector(".dropdown-custom");
+    if (dropdown) {
+      if (isMenuOpen) {
+        dropdown.classList.remove("show"); // Gizle
+      } else {
+        dropdown.classList.add("show"); // Göster
+      }
+    }
   };
 
   return (
@@ -38,13 +58,11 @@ const ScenarioCreation = () => {
       {/* Sağ üst köşede dropdown menü */}
       <div className="tab-menu">
         <button onClick={toggleMenu}>Menü</button>
-        {isMenuOpen && (
-          <div className="dropdown-menu">
-            <button onClick={handleScenaricreateByuser}>Senaryo Yaz</button>
-            <button onClick={handleScenarioList}>Yazılan Senaryolar</button>
-            <button onClick={handleLogout}>Çıkış Yap</button>
-          </div>
-        )}
+        <div className="dropdown-custom">
+          <button onClick={handleScenaricreateByuser}>Senaryo Yaz</button>
+          <button onClick={handleScenarioList}>Yazılan Senaryolar</button>
+          <button onClick={handleLogout}>Çıkış Yap</button>
+        </div>
       </div>
 
       <h1>Senaryo Oluşturma</h1>

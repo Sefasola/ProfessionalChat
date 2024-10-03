@@ -30,7 +30,7 @@ const SignIn = () => {
     e.preventDefault();
 
     // Basit giriş simülasyonu
-    if (user === "testuser" && pwd === "Test@1234") {
+    if (user === "sefato" && pwd === "1234") {
       setSuccess(true);
       navigate("/scenario-creation"); // Başarılı giriş sonrası yönlendirme
     } else {

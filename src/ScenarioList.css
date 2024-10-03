@@ -1,0 +1,79 @@
+.scenario-list-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px; /* Üst boşluğu biraz daha daraltıyoruz */
+}
+
+.scenarios-section {
+    width: 60%;
+    padding: 100px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    max-height: 800px;
+    overflow-y: auto;
+    margin-top: 100px; /* Senaryoların üst kısmını daha rahat görmek için boşluk artırıldı */
+}
+
+.scenarios-section h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.scenario-item {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.scenario-item h3 {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.scenario-item p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Grafikler ve istatistiklerin bir arada olduğu bölüm */
+.charts-and-stats-section {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 20px;
+    margin-top: 40px;
+}
+
+/* İstatistiksel veriler bölümü */
+.statistics-section {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 150px; /* İstatistikleri biraz daha aşağıya almak için boşluk artırıldı */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Grafikler bölümü */
+.chart-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    min-height: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

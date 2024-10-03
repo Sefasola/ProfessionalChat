@@ -1,41 +1,122 @@
 .scenario-writing-page {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .dropdown-menu, .manual-input, .scenario-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .scenario-textarea {
-    height: 200px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+h1 {
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.topic-dropdown {
+  width: 50%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  text-align-last: center; /* Dropdown içeriğini ortalar */
+  margin-bottom: 20px;
+  color: #000; /* Yazı rengini siyah yapıyoruz */
+  background-color: white; /* Arka planı beyaz yapıyoruz */
+}
+
+.manual-input,
+.scenario-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.scenario-textarea {
+  height: 350px;
+  width: 300%;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.tab-menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.tab-menu button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
+
+.dropdown-content button {
+  padding: 10px;
+  background-color: white;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: black; /* Yazı rengini siyah yapıyoruz */
+}
+
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+
+/* Dropdown Menü için Özel Sınıf */
+.dropdown-custom {
+  background-color: white; /* Arka plan beyaz */
+  color: black; /* Yazı rengini siyah yapıyoruz */
+  border: 1px solid #ccc; /* Çerçeve rengi */
+  border-radius: 5px;
+  width: 200px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-custom button {
+  padding: 10px;
+  background-color: white; /* Arka plan beyaz */
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%; /* Butonların genişliği */
+  color: black; /* Yazı rengini siyah yapıyoruz */
+}
+
+.dropdown-custom button:hover {
+  background-color: #f1f1f1; /* Hover durumunda arka plan gri */
+  color: black; /* Yazı rengi hover sırasında da siyah kalır */
+}
