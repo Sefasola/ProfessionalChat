@@ -109,6 +109,37 @@ const ScenarioList = () => {
     });
   }, []);
 
+  // Grafik verileri (en çok yazı yazan 3 yazar)
+  const topThreeAuthorsChartData = (() => {
+    if (statistics.authorCounts) {
+      // authorCounts objesini entries formatına çevirip sıralıyoruz
+      const sortedEntries = Object.entries(statistics.authorCounts)
+        .sort(([, aCount], [, bCount]) => bCount - aCount) // En çoktan en aza doğru sıralama
+        .slice(0, 3); // İlk 3 yazarı alıyoruz
+
+      // Sıralanmış verilerden etiketler (authors) ve sayılar (counts) oluşturuyoruz
+      const top3Authors = sortedEntries.map(([author]) => author);
+      const top3Counts = sortedEntries.map(([, count]) => count);
+
+      return {
+        labels: top3Authors, // İlk 3 yazarı etiket olarak kullanıyoruz
+        datasets: [
+          {
+            label: "Yazara Göre Senaryo Sayısı (En Çok Yazı Yazan 3 Yazar)",
+            data: top3Counts, // İlk 3 yazarın senaryo sayıları
+            backgroundColor: "rgba(153, 102, 255, 0.6)",
+            borderColor: "rgba(153, 102, 255, 1)",
+            borderWidth: 1,
+          },
+        ],
+      };
+    }
+    return {
+      labels: [],
+      datasets: [],
+    };
+  })();
+
   // Dropdown menüsü için fonksiyonlar
   const handleLogout = () => {
     navigate("/signin");
@@ -145,19 +176,6 @@ const ScenarioList = () => {
     ],
   };
 
-  const authorChartData = {
-    labels: Object.keys(statistics.authorCounts),
-    datasets: [
-      {
-        label: "Yazara Göre Senaryo Sayısı",
-        data: Object.values(statistics.authorCounts),
-        backgroundColor: "rgba(153, 102, 255, 0.6)",
-        borderColor: "rgba(153, 102, 255, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
-
   return (
     <div className="scenario-list-page">
       {/* Sağ üst köşede dropdown menü */}
@@ -173,7 +191,7 @@ const ScenarioList = () => {
           </div>
         )}
       </div>
-  
+
       <div className="content-container">
         {/* Senaryoların listelendiği bölüm */}
         <div className="scenarios-section">
@@ -186,7 +204,7 @@ const ScenarioList = () => {
             </div>
           ))}
         </div>
-  
+
         {/* Grafikler ve istatistiksel veriler sağ tarafta */}
         <div className="charts-and-stats-section">
           <div className="statistics-section">
@@ -198,21 +216,22 @@ const ScenarioList = () => {
               <strong>En Aktif Yazar:</strong> {statistics.mostActiveWriter}
             </p>
           </div>
-  
-          {/* Grafikler */}
+
+          {/* En çok yazı yazan 3 yazarı gösteren grafik */}
+          <div className="chart-container">
+            <h3>Yazara Göre Senaryolar (En Çok Yazı Yazan 3 Yazar)</h3>
+            <Bar data={topThreeAuthorsChartData} />
+          </div>
+
+          {/* Konuya göre senaryo sayısı */}
           <div className="chart-container">
             <h3>Konuya Göre Senaryolar</h3>
-            <Bar data={topicChartData} />
-          </div>
-          <div className="chart-container">
-            <h3>Yazara Göre Senaryolar</h3>
-            <Pie data={authorChartData} />
+            <Pie data={topicChartData} />
           </div>
         </div>
       </div>
     </div>
   );
-  
 };
 
 export default ScenarioList;
