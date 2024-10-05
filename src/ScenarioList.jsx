@@ -219,7 +219,7 @@ const ScenarioList = () => {
 
           {/* En çok yazı yazan 3 yazarı gösteren grafik */}
           <div className="chart-container">
-            <h3>Yazara Göre Senaryolar (En Çok Yazı Yazan 3 Yazar)</h3>
+            <h3>En Aktif 3 Yazar</h3>
             <Bar data={topThreeAuthorsChartData} />
           </div>
 
