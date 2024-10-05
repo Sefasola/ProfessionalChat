@@ -1,0 +1,132 @@
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .profile-picture-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .upload-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .upload-button:hover {
+    background-color: #45a049;
+  }
+  
+  .profile-info {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .text-input {
+    width: 60%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  p {
+    margin-top: 10px;
+  }
+  
+  
+  .tab-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .tab-menu button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+  }
+  
+  .dropdown-content button {
+    padding: 10px;
+    background-color: white;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    color: black; /* Yazı rengini siyah yapıyoruz */
+  }
+  
+  .dropdown-content button:hover {
+    background-color: #f1f1f1;
+  }
+  
+  
+  /* Dropdown Menü için Özel Sınıf */
+  .dropdown-custom {
+    background-color: white; /* Arka plan beyaz */
+    color: black; /* Yazı rengini siyah yapıyoruz */
+    border: 1px solid #ccc; /* Çerçeve rengi */
+    border-radius: 5px;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdown-custom button {
+    padding: 10px;
+    background-color: white; /* Arka plan beyaz */
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    width: 100%; /* Butonların genişliği */
+    color: black; /* Yazı rengini siyah yapıyoruz */
+  }
+  
+  .dropdown-custom button:hover {
+    background-color: #f1f1f1; /* Hover durumunda arka plan gri */
+    color: black; /* Yazı rengi hover sırasında da siyah kalır */
+  }
+  

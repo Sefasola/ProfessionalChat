@@ -1,75 +1,77 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // useLocation eklendi
-import "./ScenarioWriting.css"; // CSS dosyasını ekledik
-import "./ScenarioCreation.css"; // CSS dosyasını ekledik
+import { useNavigate, useLocation } from "react-router-dom";
+import "./ScenarioWriting.css";
+import "./ScenarioCreation.css";
 
-const ScenarioWriting = () => {
-  const [topic, setTopic] = useState("Yapay Zeka"); // Varsayılan konu
-  const [customTopic, setCustomTopic] = useState(""); // Manuel ekleme seçeneği için
-  const [isManualTopic, setIsManualTopic] = useState(false); // Manuel ekleme açık mı
-  const [scenarioText, setScenarioText] = useState("");
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü açma/kapama durumu
-  const navigate = useNavigate(); // Yönlendirme işlevi
-  const location = useLocation(); // Mevcut sayfa konumunu almak için
+const ScenarioWriting = ({ userName, profilePicture }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const [topic, setTopic] = useState(""); 
+  const [customTopic, setCustomTopic] = useState(""); 
+  const [isManualTopic, setIsManualTopic] = useState(false); 
+  const [scenarioText, setScenarioText] = useState(""); 
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen); 
+  };
+
+  const handleProfilePage = () => {
+    navigate("/profile");
+  };
+
+  const handleScenaricreateByAI = () => {
+    navigate("/scenario-creation");
+  };
+
+  const handleScenaricreateByuser = () => {
+    if (location.pathname === "/scenario-writing") {
+      setIsMenuOpen(false); 
+    } else {
+      navigate("/scenario-writing");
+      setIsMenuOpen(false);
+    }
+  };
+
+const handleScenarioList = () => {
+    navigate("/scenario-list");
+};
+  const handleLogout = () => {
+    navigate("/signin");
+  };
 
   const handleTopicChange = (e) => {
-    if (e.target.value === "Manuel Ekle") {
+    const selectedTopic = e.target.value;
+
+    if (selectedTopic === "Manuel Ekle") {
       setIsManualTopic(true);
-      setTopic("");
+      setTopic(""); 
     } else {
       setIsManualTopic(false);
-      setTopic(e.target.value);
+      setTopic(selectedTopic); 
     }
   };
 
   const handleScenarioSubmit = (e) => {
     e.preventDefault();
-    const selectedTopic = isManualTopic ? customTopic : topic;
-    console.log(`Senaryo Yazılıyor: ${selectedTopic}`);
+    const finalTopic = isManualTopic ? customTopic : topic; 
+    console.log(`Senaryo Konusu: ${finalTopic}`);
     console.log(`Senaryo: ${scenarioText}`);
-    setScenarioText(""); // Senaryo alanını temizle
-  };
-
-  const handleLogout = () => {
-    navigate("/signin");
-  };
-
-  const handleScenarioList = () => {
-    navigate("/scenario-list");
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); // Menü açma/kapama işlevi
-  };
-
-  const handleScenaricreateByuser = () => {
-    // Eğer şu anda "Senaryo Yazma" sayfasındaysak, yönlendirme yapma, sadece menüyü kapat
-    if (location.pathname === "/scenario-writing") {
-      setIsMenuOpen(false); // Menü kapansın
-    } else {
-      navigate("/scenario-writing"); // Farklı sayfadaysa yönlendirme yap
-      setIsMenuOpen(false); // Menü kapansın
-    }
-  };
-
-  const handleScenaricreateByAI = () => {
-    // Yazılan senaryolar sayfasına yönlendirme
-    navigate("/scenario-creation");
+    setScenarioText(""); 
   };
 
   return (
     <div className="scenario-page">
-      {/* Sağ üst köşede dropdown menü */}
+      {/* Sağ üst köşede açılır menü */}
       <div className="tab-menu">
-        <button onClick={toggleMenu}>Menü</button>
+        <button onClick={toggleMenu}>Menü</button> 
         {isMenuOpen && (
           <div className="dropdown-content">
-            <button onClick={handleScenaricreateByAI}>
-              {" "}
-              AI ile Senaryo Oluştur
-            </button>
+            <button onClick={handleScenaricreateByAI}>AI ile Senaryo Oluştur</button>
             <button onClick={handleScenaricreateByuser}>Senaryo Yaz</button>
             <button onClick={handleScenarioList}>Yazılan Senaryolar</button>
+            <button onClick={handleProfilePage}>Profil Sayfası</button>
             <button onClick={handleLogout}>Çıkış Yap</button>
           </div>
         )}
@@ -77,14 +79,21 @@ const ScenarioWriting = () => {
 
       <h1>Senaryo Yazma</h1>
 
+      {/* Kullanıcı profil resmi ve ismi */}
+      <div className="user-info">
+        <img src={profilePicture} alt="Profile" className="profile-picture" /> 
+        <h2>{userName}</h2> 
+      </div>
+
       <form onSubmit={handleScenarioSubmit} className="form-container">
         <label htmlFor="topic">Senaryo Konusu:</label>
         <select
           id="topic"
-          value={topic}
-          onChange={handleTopicChange}
+          value={isManualTopic ? "" : topic} 
+          onChange={handleTopicChange} 
           className="topic-dropdown"
         >
+          <option value="">Konu Seçin</option>
           <option value="Yapay Zeka">Yapay Zeka</option>
           <option value="Blockchain">Blockchain</option>
           <option value="IoT">IoT</option>
@@ -98,6 +107,7 @@ const ScenarioWriting = () => {
             onChange={(e) => setCustomTopic(e.target.value)}
             placeholder="Kendi konunuzu girin"
             className="manual-input"
+            autoFocus
             required
           />
         )}

@@ -77,3 +77,52 @@
     min-height: 300px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+/* Menü Butonu ve Dropdown */
+ /* Menü Butonu ve Dropdown */
+
+.tab-menu {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* Menü her şeyin üstünde olacak */
+}
+
+.tab-menu button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none; /* Varsayılan olarak görünmez */
+    flex-direction: column;
+    width: 150px;
+    z-index: 1001;
+}
+
+.dropdown-content.show { /* Menü açıldığında görünür hale getirmek için bu sınıf kullanılacak */
+    display: flex;
+}
+
+.dropdown-content button {
+    padding: 10px;
+    background-color: white;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    color: black;
+}
+
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+  
