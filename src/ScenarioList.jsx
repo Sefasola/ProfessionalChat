@@ -45,7 +45,7 @@ const ScenarioList = () => {
         content: "Gelecekte AI insanları yönlendirecek.",
       },
       {
-        author: "Ayşe",
+        author: "Sefa",
         topic: "Blockchain",
         content: "Blockchain ile güvenli ticaret.",
       },
@@ -65,17 +65,17 @@ const ScenarioList = () => {
         content: "AI ile daha iyi sağlık hizmetleri.",
       },
       {
-        author: "Ayşe",
+        author: "Sefa",
         topic: "Yapay Zeka",
         content: "AI ile daha iyi sağlık hizmetleri.",
       },
       {
-        author: "Ayşe",
+        author: "Sefa",
         topic: "Yapay Zeka",
         content: "AI ile daha iyi sağlık hizmetleri.",
       },
       {
-        author: "Ayşe",
+        author: "Sefa",
         topic: "Yapay Zeka",
         content: "AI ile daha iyi sağlık hizmetleri.",
       },
