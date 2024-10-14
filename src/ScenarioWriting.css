@@ -1,9 +1,9 @@
 .scenario-page {
   display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
 h1 {
@@ -31,10 +31,11 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  width: 100%; /* Form genişliğini %100 yapıyoruz */
 }
 
 .topic-dropdown {
-  width: 80%;
+  width: 100%; /* Dropdown genişliğini %100 yapıyoruz */
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -43,7 +44,7 @@ h1 {
 }
 
 .scenario-textarea {
-  width: 80%;
+  width: 100%; /* Textarea genişliğini %100 yapıyoruz */
   padding: 10px;
   height: 150px;
   border-radius: 5px;
@@ -64,8 +65,6 @@ button:hover {
   background-color: #45a049;
 }
 
- 
-  
 .tab-menu {
   position: absolute;
   top: 10px;
@@ -80,7 +79,6 @@ button:hover {
   border-radius: 5px;
   cursor: pointer;
 }
-
 
 .dropdown-content {
   position: absolute;
@@ -100,19 +98,18 @@ button:hover {
   border: none;
   text-align: left;
   cursor: pointer;
-  color: black; /* Yazı rengini siyah yapıyoruz */
+  color: black;
 }
 
 .dropdown-content button:hover {
   background-color: #f1f1f1;
 }
 
-
 /* Dropdown Menü için Özel Sınıf */
 .dropdown-custom {
-  background-color: white; /* Arka plan beyaz */
-  color: black; /* Yazı rengini siyah yapıyoruz */
-  border: 1px solid #ccc; /* Çerçeve rengi */
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
   border-radius: 5px;
   width: 200px;
   padding: 10px;
@@ -121,16 +118,15 @@ button:hover {
 
 .dropdown-custom button {
   padding: 10px;
-  background-color: white; /* Arka plan beyaz */
+  background-color: white;
   border: none;
   text-align: left;
   cursor: pointer;
-  width: 100%; /* Butonların genişliği */
-  color: black; /* Yazı rengini siyah yapıyoruz */
+  width: 100%;
+  color: black;
 }
 
 .dropdown-custom button:hover {
-  background-color: #f1f1f1; /* Hover durumunda arka plan gri */
-  color: black; /* Yazı rengi hover sırasında da siyah kalır */
+  background-color: #f1f1f1;
+  color: black;
 }
-

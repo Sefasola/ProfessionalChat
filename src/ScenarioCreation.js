@@ -1,71 +1,72 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // useLocation eklendi
-import "./ScenarioCreation.css"; // CSS dosyasını ekledik
+import { useNavigate, useLocation } from "react-router-dom";
+import "./ScenarioCreation.css";
 
-const ScenarioCreation = () => {
+const ScenarioCreation = ({ userName, profilePicture }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
-  const navigate = useNavigate(); // Yönlendirme için navigate kullanımı
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü açma/kapama durumu
-  const location = useLocation(); // Mevcut sayfa konumunu almak için
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setResponse(`Sorduğunuz soru: "${input}" analiz ediliyor...`); // Simüle edilmiş cevap
-    setInput(""); // Soru gönderildikten sonra input'u temizler
+    setResponse(`Sorduğunuz soru: "${input}" analiz ediliyor...`);
+    setInput("");
   };
 
   const handleLogout = () => {
-    // Çıkış yap butonuna basıldığında giriş sayfasına yönlendirme
     navigate("/signin");
-  };
-
-  const handleScenarioList = () => {
-    // Yazılan senaryolar sayfasına yönlendirme
-    navigate("/scenario-list");
-  };
-
-  const handleScenaricreateByuser = () => {
-    // Yazılan senaryolar sayfasına yönlendirme
-    navigate("/scenario-writing");
-  };
-
-  const handleScenaricreateByAI = () => {
-    // Yazılan senaryolar sayfasına yönlendirme
-    if (location.pathname === "/scenario-creation") {
-      setIsMenuOpen(false); // Menü kapansın
-    } else {
-      navigate("/scenario-creation"); // Farklı sayfadaysa yönlendirme yap
-      setIsMenuOpen(false); // Menü kapansın
-    }
-    //navigate("/scenario-creation");
   };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    const dropdown = document.querySelector(".dropdown-custom");
-    if (dropdown) {
-      if (isMenuOpen) {
-        dropdown.classList.remove("show"); // Gizle
-      } else {
-        dropdown.classList.add("show"); // Göster
-      }
+  };
+
+  const handleProfilePage = () => {
+    navigate("/profile");
+  };
+
+  const handleScenaricreateByAI = () => {
+    navigate("/scenario-creation");
+  };
+
+  const handleScenaricreateByuser = () => {
+    if (location.pathname === "/scenario-writing") {
+      setIsMenuOpen(false);
+    } else {
+      navigate("/scenario-writing");
+      setIsMenuOpen(false);
     }
+  };
+
+  const handleScenarioList = () => {
+    navigate("/scenario-list");
   };
 
   return (
     <div className="scenario-page">
-      {/* Sağ üst köşede dropdown menü */}
+      {/* Sağ üst köşede açılır menü */}
       <div className="tab-menu">
         <button onClick={toggleMenu}>Menü</button>
-        <div className="dropdown-custom">
-          <button onClick={handleScenaricreateByuser}>Senaryo Yaz</button>
-          <button onClick={handleScenarioList}>Yazılan Senaryolar</button>
-          <button onClick={handleLogout}>Çıkış Yap</button>
-        </div>
+        {isMenuOpen && (
+          <div className="dropdown-content">
+            <button onClick={handleScenaricreateByAI}>AI ile Senaryo Oluştur</button>
+            <button onClick={handleScenaricreateByuser}>Senaryo Yaz</button>
+            <button onClick={handleScenarioList}>Yazılan Senaryolar</button>
+            <button onClick={handleProfilePage}>Profil Sayfası</button>
+            <button onClick={handleLogout}>Çıkış Yap</button>
+          </div>
+        )}
       </div>
 
       <h1>Senaryo Oluşturma</h1>
+
+      {/* Kullanıcı profil resmi ve ismi */}
+      <div className="user-info">
+        <img src={profilePicture} alt="Profile" className="profile-picture" />
+        <h2>{userName}</h2>
+      </div>
 
       {response && (
         <div className="response">

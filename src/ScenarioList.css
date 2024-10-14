@@ -1,58 +1,91 @@
+/* Menü Butonu ve Dropdown */
+.tab-menu {
+    position: fixed; /* Sabit pozisyon */
+    top: 10px; /* Üstten hizalama */
+    right: 20px; /* Sağdan hizalama */
+    z-index: 9999;
+}
+
+.tab-menu button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.dropdown-custom {
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none; /* Varsayılan olarak gizli */
+    flex-direction: column;
+    width: 150px;
+    z-index: 10000;
+}
+
+.dropdown-custom.show {
+    display: flex;
+}
+
+.dropdown-custom button {
+    padding: 10px;
+    background-color: white;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    color: black;
+}
+
+.dropdown-custom button:hover {
+    background-color: #f1f1f1;
+}
+
+/* Sayfanın genel düzeni */
 .scenario-list-page {
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
+/* Senaryo Başlığı Bölümü */
+.scenarios-section h2 {
+    margin-bottom: 20px;
+    margin-top: 100px; /* Başlığı daha üstte tutmak için boşluğu sıfırlıyoruz */
+    text-align: center;
+}
+
+/* İçerik konteyneri */
 .content-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* İki tarafı dengeliyor */
     align-items: flex-start;
-    margin-top: 20px; /* Üst boşluğu biraz daha daraltıyoruz */
+    margin-top: 80px; /* İçeriklerin üst boşluğunu artırıyoruz */
 }
 
+/* Senaryo kısmı */
 .scenarios-section {
-    width: 60%;
-    padding: 100px;
+    width: 50%; /* Genişliği %50 yaparak yerleştiriyoruz */
+    padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
     max-height: 800px;
     overflow-y: auto;
-    margin-top: 100px; /* Senaryoların üst kısmını daha rahat görmek için boşluk artırıldı */
 }
 
-.scenarios-section h2 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.scenario-item {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0;
-}
-
-.scenario-item h3 {
-    margin: 5px 0;
-    font-size: 18px;
-}
-
-.scenario-item p {
-    margin: 5px 0;
-    font-size: 14px;
-}
-
-/* Grafikler ve istatistiklerin bir arada olduğu bölüm */
 .charts-and-stats-section {
-    width: 35%;
+    width: 45%; /* Grafiklerin genişliğini %45 yapıyoruz */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding-left: 20px;
-    margin-top: 40px;
 }
+
 
 /* İstatistiksel veriler bölümü */
 .statistics-section {
@@ -64,65 +97,19 @@
     font-weight: bold;
     width: 100%;
     margin-bottom: 20px;
-    margin-top: 150px; /* İstatistikleri biraz daha aşağıya almak için boşluk artırıldı */
+    margin-top: 50px; /* Üst boşluğu artırarak aşağı indiriyoruz */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Grafikler bölümü */
-.chart-container {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    min-height: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-/* Menü Butonu ve Dropdown */
- /* Menü Butonu ve Dropdown */
-
-.tab-menu {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000; /* Menü her şeyin üstünde olacak */
-}
-
-.tab-menu button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    position: absolute;
-    top: 40px;
-    right: 10px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: none; /* Varsayılan olarak görünmez */
-    flex-direction: column;
-    width: 150px;
-    z-index: 1001;
-}
-
-.dropdown-content.show { /* Menü açıldığında görünür hale getirmek için bu sınıf kullanılacak */
+/* Grafikler ve istatistiklerin olduğu kısım */
+.charts-and-stats-section {
+    width: 45%; 
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 20px;
+    margin-top: 50px; /* Grafikleri biraz daha aşağıya çekiyoruz */
 }
 
-.dropdown-content button {
-    padding: 10px;
-    background-color: white;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    color: black;
-}
 
-.dropdown-content button:hover {
-    background-color: #f1f1f1;
-}
-  
+

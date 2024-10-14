@@ -11,9 +11,8 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
-import "./ScenarioList.css"; // CSS dosyasını ekliyoruz
+import "./ScenarioList.css";
 
-// Chart.js'yi yapılandırmak için register işlemi yapıyoruz
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -35,7 +34,6 @@ const ScenarioList = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menü açma/kapama durumu
   const navigate = useNavigate(); // Yönlendirme işlevi
 
-  // Senaryoları çekme işlemi (örnek veriler)
   useEffect(() => {
     const mockScenarios = [
       { author: "Ali", topic: "Yapay Zeka", content: "AI insanları yönlendirecek." },
@@ -46,7 +44,6 @@ const ScenarioList = () => {
     ];
     setScenarios(mockScenarios);
 
-    // İstatistiksel verileri güncellemek için
     const topicCounts = mockScenarios.reduce((acc, scenario) => {
       acc[scenario.topic] = (acc[scenario.topic] || 0) + 1;
       return acc;
@@ -73,7 +70,6 @@ const ScenarioList = () => {
     });
   }, []);
 
-  // Grafik verileri
   const topThreeAuthorsChartData = (() => {
     if (statistics.authorCounts) {
       const sortedEntries = Object.entries(statistics.authorCounts)
@@ -112,22 +108,22 @@ const ScenarioList = () => {
     ],
   };
 
-  // Menü açma/kapatma işlevi
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <div className="scenario-list-page">
-      {/* Sağ üst köşede dropdown menü */}
       <div className="tab-menu">
         <button onClick={toggleMenu}>Menü</button>
         {isMenuOpen && (
-          <div className="dropdown-custom show">
+          <div className={`dropdown-custom ${isMenuOpen ? "show" : ""}`}>
             <button onClick={() => navigate("/scenario-creation")}>
               AI ile Senaryo Oluştur
             </button>
             <button onClick={() => navigate("/scenario-writing")}>Senaryo Yaz</button>
+            <button onClick={() => navigate("/scenario-list")}>Senaryo Listesi</button>
+            <button onClick={() => navigate("/profile")}>Profil Sayfası</button>
             <button onClick={() => navigate("/signin")}>Çıkış Yap</button>
           </div>
         )}

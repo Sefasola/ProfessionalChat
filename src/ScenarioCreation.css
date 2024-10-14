@@ -1,123 +1,94 @@
-/* Genel Sayfa Düzeni */
 .scenario-page {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100vh; /* Sayfanın tamamını kaplaması için */
+  align-items: center;
+  justify-content: center;
   padding: 20px;
-  box-sizing: border-box;
 }
 
-/* Menü Butonu ve Dropdown */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.user-info h2 {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Menü stilleri */
 .tab-menu {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
 }
 
 .tab-menu button {
   padding: 10px 20px;
-  background-color: white; /* Arka plan rengini beyaz yapıyoruz */
-  color: black; /* Yazı rengini siyah yapıyoruz */
-  border: 1px solid #ccc; /* Buton kenarları için hafif bir çerçeve */
+  background-color: #007bff;
+  color: white;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.tab-menu button:hover {
-  background-color: #f1f1f1; /* Hover durumunda hafif gri */
-}
-
-.dropdown-menu {
+.dropdown-content {
   position: absolute;
-  top: 50px; /* Menü butonunun hemen altında olacak */
-  right: 20px;
-  background-color: white; /* Arka plan beyaz */
+  top: 40px;
+  right: 10px;
+  background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  width: 200px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 150px;
 }
 
-.dropdown-menu button {
+.dropdown-content button {
   padding: 10px;
-  background-color: white; /* Arka plan beyaz */
+  background-color: white;
   border: none;
   text-align: left;
   cursor: pointer;
-  color: black; /* Yazı rengini siyah yapıyoruz */
+  color: black;
 }
 
-.dropdown-menu button:hover {
-  background-color: #f1f1f1; /* Hover durumunda gri */
-  color: black; /* Hover sırasında da yazının siyah kalmasını sağlıyoruz */
-}
-
-/* Başlık */
-h1 {
-  text-align: center;
-  margin-top: 60px; /* Menü butonunun altında olacak şekilde boşluk */
-}
-
-/* Cevap Bölümü */
-.response {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #e9ecef;
-  border-radius: 5px;
-}
-
-/* Form Düzeni */
-.form-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-container label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.form-container input {
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.form-container button {
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.form-container button:hover {
-  background-color: #218838;
-}
-
-
-
-/* Dropdown Menü için Özel Sınıf */
-.dropdown-custom {
-  background-color: white; /* Arka plan beyaz */
-  color: black; /* Yazı rengini siyah yapıyoruz */
-  border: 1px solid #ccc; /* Çerçeve rengi */
-  border-radius: 5px;
-  width: 200px;
-  padding: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 50px;
-  right: 0px;
-  display: none; /* İlk başta gizli */
-}
-
-.dropdown-custom.show {
-  display: flex; /* Açıldığında göster */
-  flex-direction: column; /* Dikey hizala */
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
 }
