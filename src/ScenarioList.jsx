@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bar, Pie } from "react-chartjs-2"; 
+import axios from "axios"; // Axios ile backend bağlantısı
+import { Bar, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -35,39 +36,42 @@ const ScenarioList = () => {
   const navigate = useNavigate(); // Yönlendirme işlevi
 
   useEffect(() => {
-    const mockScenarios = [
-      { author: "Ali", topic: "Yapay Zeka", content: "AI insanları yönlendirecek." },
-      { author: "Fatma", topic: "Blockchain", content: "Blockchain ile güvenli ticaret." },
-      { author: "Ahmet", topic: "Yapay Zeka", content: "AI eğitim sistemlerini değiştirecek." },
-      { author: "Fatma", topic: "IoT", content: "IoT cihazlar evlerde devrim yapacak." },
-      { author: "Ali", topic: "Yapay Zeka", content: "AI ile daha iyi sağlık hizmetleri." },
-    ];
-    setScenarios(mockScenarios);
+    const fetchScenarios = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/scenarios"); // Backend'den senaryoları çekin
+        setScenarios(response.data); // Gelen senaryoları state'e kaydedin
 
-    const topicCounts = mockScenarios.reduce((acc, scenario) => {
-      acc[scenario.topic] = (acc[scenario.topic] || 0) + 1;
-      return acc;
-    }, {});
+        // İstatistik hesaplama
+        const topicCounts = response.data.reduce((acc, scenario) => {
+          acc[scenario.topic] = (acc[scenario.topic] || 0) + 1;
+          return acc;
+        }, {});
 
-    const authorCounts = mockScenarios.reduce((acc, scenario) => {
-      acc[scenario.author] = (acc[scenario.author] || 0) + 1;
-      return acc;
-    }, {});
+        const authorCounts = response.data.reduce((acc, scenario) => {
+          acc[scenario.author] = (acc[scenario.author] || 0) + 1;
+          return acc;
+        }, {});
 
-    const mostWrittenTopic = Object.keys(topicCounts).reduce((a, b) =>
-      topicCounts[a] > topicCounts[b] ? a : b
-    );
+        const mostWrittenTopic = Object.keys(topicCounts).reduce((a, b) =>
+          topicCounts[a] > topicCounts[b] ? a : b
+        );
 
-    const mostActiveWriter = Object.keys(authorCounts).reduce((a, b) =>
-      authorCounts[a] > authorCounts[b] ? a : b
-    );
+        const mostActiveWriter = Object.keys(authorCounts).reduce((a, b) =>
+          authorCounts[a] > authorCounts[b] ? a : b
+        );
 
-    setStatistics({
-      mostWrittenTopic,
-      mostActiveWriter,
-      topicCounts,
-      authorCounts,
-    });
+        setStatistics({
+          mostWrittenTopic,
+          mostActiveWriter,
+          topicCounts,
+          authorCounts,
+        });
+      } catch (error) {
+        console.error("Senaryolar alınırken bir hata oluştu:", error);
+      }
+    };
+
+    fetchScenarios();
   }, []);
 
   const topThreeAuthorsChartData = (() => {
@@ -121,8 +125,12 @@ const ScenarioList = () => {
             <button onClick={() => navigate("/scenario-creation")}>
               AI ile Senaryo Oluştur
             </button>
-            <button onClick={() => navigate("/scenario-writing")}>Senaryo Yaz</button>
-            <button onClick={() => navigate("/scenario-list")}>Senaryo Listesi</button>
+            <button onClick={() => navigate("/scenario-writing")}>
+              Senaryo Yaz
+            </button>
+            <button onClick={() => navigate("/scenario-list")}>
+              Senaryo Listesi
+            </button>
             <button onClick={() => navigate("/profile")}>Profil Sayfası</button>
             <button onClick={() => navigate("/signin")}>Çıkış Yap</button>
           </div>
@@ -136,6 +144,7 @@ const ScenarioList = () => {
             <div key={index} className="scenario-item">
               <h3>Yazar: {scenario.author}</h3>
               <p>Konu: {scenario.topic}</p>
+              <p>Başlık: {scenario.title}</p>
               <p>{scenario.content}</p>
             </div>
           ))}

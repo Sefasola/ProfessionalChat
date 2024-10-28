@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios"; // Axios kütüphanesini ekleyin
 import "./ScenarioWriting.css";
 import "./ScenarioCreation.css";
 
@@ -7,68 +8,86 @@ const ScenarioWriting = ({ userName, profilePicture }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false); 
-  const [topic, setTopic] = useState(""); 
-  const [customTopic, setCustomTopic] = useState(""); 
-  const [isManualTopic, setIsManualTopic] = useState(false); 
-  const [scenarioText, setScenarioText] = useState(""); 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [topic, setTopic] = useState("");
+  const [customTopic, setCustomTopic] = useState("");
+  const [isManualTopic, setIsManualTopic] = useState(false);
+  const [scenarioTitle, setScenarioTitle] = useState("");
+  const [scenarioText, setScenarioText] = useState("");
+  const [error, setError] = useState(""); // Hata mesajı için state
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); 
-  };
+  // userName değeri için kontrol
+  useEffect(() => {
+    console.log("Logged in as user:", userName);
+  }, [userName]);
 
-  const handleProfilePage = () => {
-    navigate("/profile");
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const handleScenaricreateByAI = () => {
-    navigate("/scenario-creation");
-  };
+  const handleProfilePage = () => navigate("/profile");
+
+  const handleScenaricreateByAI = () => navigate("/scenario-creation");
 
   const handleScenaricreateByuser = () => {
     if (location.pathname === "/scenario-writing") {
-      setIsMenuOpen(false); 
+      setIsMenuOpen(false);
     } else {
       navigate("/scenario-writing");
       setIsMenuOpen(false);
     }
   };
 
-const handleScenarioList = () => {
-    navigate("/scenario-list");
-};
-  const handleLogout = () => {
-    navigate("/signin");
-  };
+  const handleScenarioList = () => navigate("/scenario-list");
+
+  const handleLogout = () => navigate("/signin");
 
   const handleTopicChange = (e) => {
     const selectedTopic = e.target.value;
-
-    if (selectedTopic === "Manuel Ekle") {
-      setIsManualTopic(true);
-      setTopic(""); 
-    } else {
-      setIsManualTopic(false);
-      setTopic(selectedTopic); 
-    }
+    setIsManualTopic(selectedTopic === "Manuel Ekle");
+    setTopic(selectedTopic === "Manuel Ekle" ? "" : selectedTopic);
   };
 
-  const handleScenarioSubmit = (e) => {
+  // Senaryo gönderme işlevi
+  const handleScenarioSubmit = async (e) => {
     e.preventDefault();
-    const finalTopic = isManualTopic ? customTopic : topic; 
-    console.log(`Senaryo Konusu: ${finalTopic}`);
-    console.log(`Senaryo: ${scenarioText}`);
-    setScenarioText(""); 
+    const finalTopic = isManualTopic ? customTopic : topic;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/scenarios",
+        {
+          author: userName, // author olarak userName kullanılıyor
+          topic: finalTopic,
+          title: scenarioTitle,
+          content: scenarioText,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+
+      console.log(response.data.message); // Başarı mesajı
+      setScenarioText("");
+      setScenarioTitle("");
+      setTopic("");
+      setCustomTopic("");
+      setError(""); // Hata mesajını temizleyin
+    } catch (error) {
+      setError("Senaryo kaydedilirken bir hata oluştu.");
+      console.error("Error saving scenario:", error);
+    }
   };
 
   return (
     <div className="scenario-page">
-      {/* Sağ üst köşede açılır menü */}
       <div className="tab-menu">
-        <button onClick={toggleMenu}>Menü</button> 
+        <button onClick={toggleMenu}>Menü</button>
         {isMenuOpen && (
           <div className="dropdown-content">
-            <button onClick={handleScenaricreateByAI}>AI ile Senaryo Oluştur</button>
+            <button onClick={handleScenaricreateByAI}>
+              AI ile Senaryo Oluştur
+            </button>
             <button onClick={handleScenaricreateByuser}>Senaryo Yaz</button>
             <button onClick={handleScenarioList}>Yazılan Senaryolar</button>
             <button onClick={handleProfilePage}>Profil Sayfası</button>
@@ -79,18 +98,19 @@ const handleScenarioList = () => {
 
       <h1>Senaryo Yazma</h1>
 
-      {/* Kullanıcı profil resmi ve ismi */}
       <div className="user-info">
-        <img src={profilePicture} alt="Profile" className="profile-picture" /> 
-        <h2>{userName}</h2> 
+        <img src={profilePicture} alt="Profile" className="profile-picture" />
+        <h2>{userName}</h2>
       </div>
+
+      {error && <p className="error-message">{error}</p>}
 
       <form onSubmit={handleScenarioSubmit} className="form-container">
         <label htmlFor="topic">Senaryo Konusu:</label>
         <select
           id="topic"
-          value={isManualTopic ? "" : topic} 
-          onChange={handleTopicChange} 
+          value={isManualTopic ? "" : topic}
+          onChange={handleTopicChange}
           className="topic-dropdown"
         >
           <option value="">Konu Seçin</option>
@@ -111,6 +131,17 @@ const handleScenarioList = () => {
             required
           />
         )}
+
+        <label htmlFor="scenarioTitle">Senaryo Başlığı:</label>
+        <input
+          type="text"
+          id="scenarioTitle"
+          value={scenarioTitle}
+          onChange={(e) => setScenarioTitle(e.target.value)}
+          placeholder="Senaryonuzun başlığını yazın..."
+          className="scenario-title-input"
+          required
+        />
 
         <label htmlFor="scenarioText">Senaryo Yazın:</label>
         <textarea

@@ -5,16 +5,16 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "./api/axios";
+import axios from "./api/axios"; // axios konfigürasyon dosyası
 import "./styles.css"; // CSS dosyanın yolu
-import { useNavigate } from "react-router-dom"; // useNavigate hook'unu ekledik
+import { useNavigate } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/; // Kullanıcı adı: 3-24 karakter arası, harf ile başlamalı
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/; // Şifre: 8-24 karakter, en az 1 büyük harf, küçük harf, rakam, özel karakter
-const REGISTER_URL = "/register";
+const REGISTER_URL = "/register"; // Kayıt URL'si
 
 const Register = () => {
-  const navigate = useNavigate(); // useNavigate hook'unu ekledik
+  const navigate = useNavigate();
   const userRef = useRef();
   const errRef = useRef();
 
@@ -26,10 +26,6 @@ const Register = () => {
   const [validPwd, setValidPwd] = useState(false);
   const [PwdFocus, setPwdFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [MatchFocus, setMatchFocus] = useState(false);
-
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -38,24 +34,16 @@ const Register = () => {
   }, []);
 
   useEffect(() => {
-    const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
-    setValidName(result);
+    setValidName(USER_REGEX.test(user));
   }, [user]);
 
   useEffect(() => {
-    const result = PWD_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
-    setValidPwd(result);
-    const match = pwd === matchPwd;
-    setValidMatch(match);
-  }, [pwd, matchPwd]);
+    setValidPwd(PWD_REGEX.test(pwd));
+  }, [pwd]);
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, pwd, matchPwd]);
+  }, [user, pwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -76,17 +64,14 @@ const Register = () => {
         }
       );
       console.log(response.data);
-      console.log(response.accessToken);
-      console.log(JSON.stringify(response));
       setSuccess(true);
-      //clear input fields
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 409) {
         setErrMsg("Username Taken");
       } else {
-        setErrMsg("registration failed");
+        setErrMsg("Registration failed");
       }
       errRef.current.focus();
     }
@@ -98,7 +83,6 @@ const Register = () => {
         <section>
           <h1>Success!</h1>
           <p>
-            {/* Başarılı olduğunda Sign In sayfasına yönlendir */}
             <button onClick={() => navigate("/signin")}>Sign In</button>
           </p>
         </section>
@@ -109,7 +93,6 @@ const Register = () => {
             className={errMsg ? "errmsg" : "offscreen"}
             aria-live="assertive"
           >
-            {" "}
             {errMsg}
           </p>
           <h1>Register</h1>
@@ -146,8 +129,9 @@ const Register = () => {
               <FontAwesomeIcon icon={faInfoCircle} />
               4 to 24 characters.
               <br />
-              Must begin with a letter. <br />
-              Letters, numbers, underscores, hyphens, allowed.
+              Must begin with a letter.
+              <br />
+              Letters, numbers, underscores, hyphens allowed.
             </p>
 
             <label htmlFor="password">
@@ -178,52 +162,20 @@ const Register = () => {
               }
             >
               <FontAwesomeIcon icon={faInfoCircle} />
-              4 to 24 characters.
+              8 to 24 characters.
               <br />
               Must include uppercase and lowercase letters, a number and special
-              character <br />
-              allowed special characters:{" "}
+              character.
+              <br />
+              Allowed special characters:{" "}
               <span aria-label="exclamation mark">!</span>
-              <span aria-label="at symbol">@</span>{" "}
+              <span aria-label="at symbol">@</span>
               <span aria-label="hashtag">#</span>
               <span aria-label="dollar sign">$</span>
               <span aria-label="percent">%</span>
             </p>
 
-            <label htmlFor="confirm_pwd">
-              Confirm Password:
-              <span className={validMatch && matchPwd ? "valid" : "hide"}>
-                <FontAwesomeIcon icon={faCheck} />
-              </span>
-              <span className={validMatch || !matchPwd ? "hide" : "invalid"}>
-                <FontAwesomeIcon icon={faTimes} />
-              </span>
-            </label>
-
-            <input
-              type="password"
-              id="confirm_pwd"
-              onChange={(e) => setMatchPwd(e.target.value)}
-              required
-              aria-invalid={validMatch ? "false" : "true"}
-              aria-describedby="confirmnote"
-              onFocus={() => setMatchFocus(true)}
-              onBlur={() => setMatchFocus(false)}
-            />
-
-            <p
-              id="confirmnote"
-              className={
-                MatchFocus && !validMatch ? "instructions" : "offscreen"
-              }
-            >
-              <FontAwesomeIcon icon={faInfoCircle} />
-              Must match the first password input field.
-            </p>
-
-            <button
-              disabled={!validName || !validPwd || !validMatch ? true : false}
-            >
+            <button disabled={!validName || !validPwd ? true : false}>
               Sign Up
             </button>
           </form>
@@ -231,7 +183,6 @@ const Register = () => {
             Already Registered?
             <br />
             <span className="line">
-              {/* Sign Up linkine tıklanırsa Register sayfasına yönlendir */}
               <a href="#" onClick={() => navigate("/signin")}>
                 Sign In
               </a>
