@@ -9,9 +9,25 @@ const ScenarioCreation = ({ userName, profilePicture }) => {
   const [response, setResponse] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setResponse(`Sorduğunuz soru: "${input}" analiz ediliyor...`);
+
+    try {
+      const res = await fetch("http://localhost:5000/api/model/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: input }),
+      });
+
+      const data = await res.json();
+      setResponse(data.answer); // Model yanıtını ekranda göster
+    } catch (error) {
+      console.error("Error fetching model response:", error);
+      setResponse("Bir hata oluştu, lütfen tekrar deneyin.");
+    }
     setInput("");
   };
 
@@ -51,7 +67,9 @@ const ScenarioCreation = ({ userName, profilePicture }) => {
         <button onClick={toggleMenu}>Menü</button>
         {isMenuOpen && (
           <div className="dropdown-content">
-            <button onClick={handleScenaricreateByAI}>AI ile Senaryo Oluştur</button>
+            <button onClick={handleScenaricreateByAI}>
+              AI ile Senaryo Oluştur
+            </button>
             <button onClick={handleScenaricreateByuser}>Senaryo Yaz</button>
             <button onClick={handleScenarioList}>Yazılan Senaryolar</button>
             <button onClick={handleProfilePage}>Profil Sayfası</button>
