@@ -114,10 +114,12 @@ const ScenarioWriting = ({ userName, profilePicture }) => {
           className="topic-dropdown"
         >
           <option value="">Konu Seçin</option>
-          <option value="Yapay Zeka">Yapay Zeka</option>
+          <option value="Artificial Intelligence">
+            Artificial Intelligence
+          </option>
           <option value="Blockchain">Blockchain</option>
-          <option value="IoT">IoT</option>
-          <option value="Manuel Ekle">Manuel Ekle</option>
+          <option value="Internet of Things">Internet of Things</option>
+          <option value="Add manual">Add manual </option>
         </select>
 
         {isManualTopic && (
